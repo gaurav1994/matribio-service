@@ -1,14 +1,14 @@
 package com.matribio.matribio_service.dto;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class PersonalDetailsDto {
     private Integer id;
     private String firstName;
     private String placeOfBirth;
-    private Date dateOfBirth;
-    private Time timeOfBirth;
+    private LocalDate dateOfBirth;
+    private LocalTime timeOfBirth;
     // private String height;
     private String highestQualification;
     private String work;
@@ -37,19 +37,19 @@ public class PersonalDetailsDto {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Time getTimeOfBirth() {
+    public LocalTime getTimeOfBirth() {
         return timeOfBirth;
     }
 
-    public void setTimeOfBirth(Time timeOfBirth) {
+    public void setTimeOfBirth(LocalTime timeOfBirth) {
         this.timeOfBirth = timeOfBirth;
     }
 

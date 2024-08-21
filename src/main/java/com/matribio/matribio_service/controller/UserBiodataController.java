@@ -36,6 +36,15 @@ public class UserBiodataController {
 
     @PostMapping("/create")
     public ResponseEntity<Integer> createUserBiodataController(@RequestBody UserBiodataDto userBiodataDto){
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        // PropertyMap<UserBiodata, UserBiodataDto> userBiodataPropertyMap = new PropertyMap<UserBiodata, UserBiodataDto>() {
+        //     @Override
+        //     protected void configure() {
+        //         skip(destination.getPersonalDetails().getDateOfBirth());
+        //         skip(destination.getPersonalDetails().getTimeOfBirth());
+        //     }
+        // };
+        // modelMapper.addMappings(userBiodataPropertyMap);
         UserBiodata userBiodata = modelMapper.map(userBiodataDto, UserBiodata.class);
 
         Optional<Integer> optionUserBiodataId = userBiodataService.addUserBiodata(userBiodata);

@@ -1,13 +1,15 @@
 package com.matribio.matribio_service.entity;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "user_personal_details_tbl")
@@ -17,8 +19,10 @@ public class PersonalDetails {
     private Integer id;
     private String firstName;
     private String placeOfBirth;
-    private Date dateOfBirth;
-    private Time timeOfBirth;
+    @Temporal(TemporalType.DATE)
+    private LocalDate dateOfBirth;
+    @Temporal(TemporalType.TIME)
+    private LocalTime timeOfBirth;
     // private String height;
     private String highestQualification;
     private String work;
@@ -47,19 +51,19 @@ public class PersonalDetails {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Time getTimeOfBirth() {
+    public LocalTime getTimeOfBirth() {
         return timeOfBirth;
     }
 
-    public void setTimeOfBirth(Time timeOfBirth) {
+    public void setTimeOfBirth(LocalTime timeOfBirth) {
         this.timeOfBirth = timeOfBirth;
     }
 

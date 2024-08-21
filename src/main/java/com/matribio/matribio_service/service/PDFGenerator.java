@@ -117,11 +117,11 @@ public class PDFGenerator {
 			setPdfAttributeValue(table, null);
 
 			setPdfAttributeKey(table, "Date of birth");
-            setPdfAttributeValue(table, null);
+            setPdfAttributeValue(table, personalDetails.getDateOfBirth().toString());
 			setPdfAttributeValue(table, null);
 
 			setPdfAttributeKey(table, "Time of birth");
-            setPdfAttributeValue(table, null);
+            setPdfAttributeValue(table, personalDetails.getTimeOfBirth().toString());
 			setPdfAttributeValue(table, null);
 
 			setPdfAttributeKey(table, "Highest Qualification");
