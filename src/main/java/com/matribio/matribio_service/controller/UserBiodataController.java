@@ -8,6 +8,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import com.matribio.matribio_service.service.UserBiodataService;
 import java.io.ByteArrayInputStream;
 
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/userbiodata")
 public class UserBiodataController {
@@ -83,7 +85,7 @@ public class UserBiodataController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=customers.pdf");
-
+        headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
         return ResponseEntity
                 .ok()
                 .headers(headers)
