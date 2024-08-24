@@ -15,6 +15,8 @@ public class UserBiodata {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    private String profilePicture;
+
     @OneToOne(cascade = CascadeType.ALL)
     private PersonalDetails personalDetails;
 
@@ -28,6 +30,14 @@ public class UserBiodata {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public PersonalDetails getPersonalDetails() {
@@ -45,5 +55,4 @@ public class UserBiodata {
     public void setFamilyDetails(FamilyDetails familyDetails) {
         this.familyDetails = familyDetails;
     }
-    
 }
