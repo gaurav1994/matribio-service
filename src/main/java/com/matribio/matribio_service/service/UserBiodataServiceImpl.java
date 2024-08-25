@@ -1,9 +1,17 @@
 package com.matribio.matribio_service.service;
 
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.time.Instant;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.matribio.matribio_service.entity.UserBiodata;
 import com.matribio.matribio_service.repository.UserBioDetailsRepository;
@@ -14,14 +22,37 @@ public class UserBiodataServiceImpl implements UserBiodataService{
     @Autowired
     UserBioDetailsRepository userBioDetailsRepository;
 
+    private Path root = Paths.get("uploads");
+
     @Override
-    public Optional<Integer> addUserBiodata(UserBiodata userBiodata) {
-        UserBiodata savedUserBiodata = userBioDetailsRepository.save(userBiodata);
-        Optional<Integer> optionalUserBiodataId = Optional.empty();
-        if (savedUserBiodata!= null) {
-            optionalUserBiodataId = Optional.of(savedUserBiodata.getId());
+    public Optional<Integer> addUserBiodata(UserBiodata userBiodata, MultipartFile file) {
+
+        try {
+            String fullPath = null;
+            if (file != null) {    
+                long instantTimeEpoch = Instant.now().getEpochSecond();
+                String originalFilename = file.getOriginalFilename();
+                if (originalFilename != null){
+                    String actualFileName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
+        
+                    if (root.getParent() == null) {
+                        root = Files.createDirectories(root);
+                    }
+                    fullPath =  root.toAbsolutePath()+ "/" + actualFileName + "_" + instantTimeEpoch + originalFilename.substring(originalFilename.lastIndexOf("."));
+                    file.transferTo(new File(fullPath));
+                }
+            }
+            userBiodata.setProfilePicture(fullPath);
+            UserBiodata savedUserBiodata = userBioDetailsRepository.save(userBiodata);
+            Optional<Integer> optionalUserBiodataId = Optional.empty();
+            if (savedUserBiodata!= null) {
+                optionalUserBiodataId = Optional.of(savedUserBiodata.getId());
+            }
+            return optionalUserBiodataId;
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
         }
-        return optionalUserBiodataId;
+        return Optional.empty();
     }
 
     @Override

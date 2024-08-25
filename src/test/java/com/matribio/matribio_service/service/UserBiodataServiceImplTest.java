@@ -26,7 +26,7 @@ public class UserBiodataServiceImplTest {
     UserBioDetailsRepository bioDetailsRepository;
 
     @Test
-    void testAddUserBiodataForSuccess() {
+    void testAddUserBiodataWithoutFileForSuccess() {
         PersonalDetails personalDetails = new PersonalDetails();
         personalDetails.setId(1);
         personalDetails.setFirstName("abc");
@@ -42,7 +42,7 @@ public class UserBiodataServiceImplTest {
         userBiodata.setFamilyDetails(familyDetails);
 
         when(bioDetailsRepository.save(userBiodata)).thenReturn(userBiodata);
-        Optional<Integer> optionalUserBiodata = biodataService.addUserBiodata(userBiodata);
+        Optional<Integer> optionalUserBiodata = biodataService.addUserBiodata(userBiodata, null);
         assertTrue(optionalUserBiodata.isPresent());
         assertEquals(123, optionalUserBiodata.get());
     }
