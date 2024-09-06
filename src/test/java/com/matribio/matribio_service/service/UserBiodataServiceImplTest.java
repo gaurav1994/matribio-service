@@ -42,7 +42,7 @@ public class UserBiodataServiceImplTest {
         userBiodata.setFamilyDetails(familyDetails);
 
         when(bioDetailsRepository.save(userBiodata)).thenReturn(userBiodata);
-        Optional<Integer> optionalUserBiodata = biodataService.addUserBiodata(userBiodata, null);
+        Optional<Integer> optionalUserBiodata = biodataService.addUserBiodata(userBiodata, null, null);
         assertTrue(optionalUserBiodata.isPresent());
         assertEquals(123, optionalUserBiodata.get());
     }
