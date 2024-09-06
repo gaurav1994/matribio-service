@@ -56,7 +56,6 @@ public class UserServiceImpl implements UserService {
     public SimpleMessage userSignup(User user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setSource("self_platform");
             User savedUser = userRepository.save(user);
             return new SimpleMessage("User Created with UserID : " + savedUser.getUserId());
         } catch (Exception ex) {

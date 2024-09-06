@@ -43,6 +43,8 @@ public class AuthController {
         user.setUsername(userRequest.getUsername());
         user.setPassword(userRequest.getPassword());
         user.setEmail(userRequest.getEmail());
+        user.setRoles("ROLE_USER");
+        user.setSource("self_platform");
         SimpleMessage userSignupMessage = userService.userSignup(user);
         return ResponseEntity.ok(userSignupMessage);
     }
