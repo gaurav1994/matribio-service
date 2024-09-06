@@ -23,6 +23,9 @@ public class UserBiodata {
     @OneToOne(cascade = CascadeType.ALL)
     private FamilyDetails familyDetails;
 
+    private String userId;
+    private String username;
+
     
     public Integer getId() {
         return id;
@@ -55,4 +58,22 @@ public class UserBiodata {
     public void setFamilyDetails(FamilyDetails familyDetails) {
         this.familyDetails = familyDetails;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    
 }

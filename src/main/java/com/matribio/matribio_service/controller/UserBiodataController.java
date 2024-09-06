@@ -24,6 +24,7 @@ import com.matribio.matribio_service.service.PDFGenerator;
 import com.matribio.matribio_service.service.UserBiodataService;
 
 import java.io.ByteArrayInputStream;
+import java.security.Principal;
 
 
 @CrossOrigin(origins = "*")
@@ -38,7 +39,10 @@ public class UserBiodataController {
     UserBiodataService userBiodataService;
 
     @PostMapping("/create")
-    public ResponseEntity<Integer> createUserBiodataController(@RequestPart("data") UserBiodataDto userBiodataDto, @RequestPart(value = "file" , required = false) MultipartFile file){
+    public ResponseEntity<Integer> createUserBiodataController(
+                                        @RequestPart("data") UserBiodataDto userBiodataDto, 
+                                        @RequestPart(value = "file" , required = false) MultipartFile file,
+                                        Principal principal ){
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         // PropertyMap<UserBiodata, UserBiodataDto> userBiodataPropertyMap = new PropertyMap<UserBiodata, UserBiodataDto>() {
         //     @Override
@@ -49,7 +53,7 @@ public class UserBiodataController {
         // };
         // modelMapper.addMappings(userBiodataPropertyMap);
         UserBiodata userBiodata = modelMapper.map(userBiodataDto, UserBiodata.class);
-        Optional<Integer> optionUserBiodataId = userBiodataService.addUserBiodata(userBiodata, file);
+        Optional<Integer> optionUserBiodataId = userBiodataService.addUserBiodata(userBiodata, file, principal);
         if (optionUserBiodataId.isEmpty()) {
             throw new RuntimeException("User Bio Data not saved.");
         }
