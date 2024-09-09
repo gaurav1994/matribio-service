@@ -10,4 +10,6 @@ import com.matribio.matribio_service.entity.PaymentTransaction;
 public interface PaymentTransactionsRepository extends JpaRepository<PaymentTransaction, Integer> {
 
     PaymentTransaction findByOrderId(String orderId);
+
+    PaymentTransaction findByReceiptId(String receiptId);
 }

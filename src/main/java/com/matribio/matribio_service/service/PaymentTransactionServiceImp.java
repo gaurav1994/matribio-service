@@ -67,6 +67,12 @@ public class PaymentTransactionServiceImp implements PaymentTransactionService {
         }
     }
 
+    
+
+    @Override
+    public PaymentTransaction getPaymentbyReceiptId(String receiptId) {
+        return transactionsRepository.findByReceiptId(receiptId);
+    }
 
     private static String generateRecieptId() {
         int length = 7;

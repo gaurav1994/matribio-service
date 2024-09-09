@@ -1,5 +1,7 @@
 package com.matribio.matribio_service.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+@DynamicUpdate
 @Entity
 @Table(name = "user_biodata_tbl")
 public class UserBiodata {
@@ -25,7 +28,8 @@ public class UserBiodata {
 
     private String userId;
     private String username;
-
+    private String receiptId;
+    
     
     public Integer getId() {
         return id;
@@ -73,6 +77,14 @@ public class UserBiodata {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getReceiptId() {
+        return receiptId;
+    }
+
+    public void setReceiptId(String receiptId) {
+        this.receiptId = receiptId;
     }
 
     

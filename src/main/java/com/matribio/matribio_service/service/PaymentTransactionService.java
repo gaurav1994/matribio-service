@@ -9,4 +9,6 @@ public interface PaymentTransactionService {
     PaymentTransaction createOrderForTransaction(Integer amount);
 
     SimpleMessage updatePaymentTransactionToDB(String orderId);
+
+    PaymentTransaction getPaymentbyReceiptId(String receiptId);
 }

@@ -2,12 +2,14 @@ package com.matribio.matribio_service.dto;
 
 public class UserBiodataDto {
     private Integer id;
+    private String profilePicture;
     private PersonalDetailsDto personalDetails;
 
     private FamilyDetailsDto familyDetails;
 
-    private Long userId;
+    private String userId;
     private String username;
+    private String paymentStatus;
     
     public Integer getId() {
         return id;
@@ -33,11 +35,11 @@ public class UserBiodataDto {
         this.familyDetails = familyDetails;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -49,5 +51,20 @@ public class UserBiodataDto {
         this.username = username;
     }
 
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
     
 }

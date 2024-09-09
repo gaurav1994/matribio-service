@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.matribio.matribio_service.dto.PaymentTransactionDto;
 import com.matribio.matribio_service.dto.SimpleMessage;
 import com.matribio.matribio_service.entity.PaymentTransaction;
+import com.matribio.matribio_service.entity.UserBiodata;
 import com.matribio.matribio_service.service.PaymentTransactionService;
+import com.matribio.matribio_service.service.UserBiodataService;
 
 
 @CrossOrigin(origins = "*")
@@ -25,6 +27,9 @@ public class PaymentTransactionController {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    UserBiodataService userBiodataService;
+
     @Value("${razorpay.key.id}")
     private String RAZORPAY_KEY_ID;
 
@@ -32,14 +37,22 @@ public class PaymentTransactionController {
     PaymentTransactionService paymentTransactionService;
 
     @GetMapping("/create-transaction")
-    public ResponseEntity<PaymentTransactionDto> createPaymentOrder(@RequestParam() Integer amount){
+    public ResponseEntity<PaymentTransactionDto> createPaymentOrder(@RequestParam() Integer amount, @RequestParam() Integer biodataId) {
         PaymentTransaction orderCreated = paymentTransactionService.createOrderForTransaction(amount);
         if (orderCreated == null) {
             throw new RuntimeException("Order not created!");
         }
+        updateUserBiodata(biodataId, orderCreated);
+
         PaymentTransactionDto orderCreatedDto = modelMapper.map(orderCreated, PaymentTransactionDto.class);
         orderCreatedDto.setRazorpayKeyId(RAZORPAY_KEY_ID);
         return ResponseEntity.ok(orderCreatedDto);
+    }
+
+    private void updateUserBiodata(Integer biodataId, PaymentTransaction orderCreated) {
+        UserBiodata userBiodata = new UserBiodata();
+        userBiodata.setReceiptId(orderCreated.getReceiptId());
+        userBiodataService.updateUserBiodata(biodataId, userBiodata);
     }
 
     @GetMapping("update-transaction")

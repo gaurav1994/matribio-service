@@ -1,6 +1,8 @@
 package com.matribio.matribio_service.controller;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.matribio.matribio_service.dto.UserBiodataDto;
+import com.matribio.matribio_service.entity.PaymentTransaction;
 import com.matribio.matribio_service.entity.UserBiodata;
 import com.matribio.matribio_service.service.PDFGenerator;
+import com.matribio.matribio_service.service.PaymentTransactionService;
 import com.matribio.matribio_service.service.UserBiodataService;
 
 import java.io.ByteArrayInputStream;
 import java.security.Principal;
+
 
 
 @CrossOrigin(origins = "*")
@@ -37,6 +42,9 @@ public class UserBiodataController {
 
     @Autowired
     UserBiodataService userBiodataService;
+
+    @Autowired
+    PaymentTransactionService paymentTransactionService;
 
     @PostMapping("/create")
     public ResponseEntity<Integer> createUserBiodataController(
@@ -79,6 +87,24 @@ public class UserBiodataController {
         return ResponseEntity.ok().body(userBiodataDto);
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<List<UserBiodataDto>> getUserBiodataByIdController(Principal principal ){
+        Optional<List<UserBiodata>> optionalListUserBiodata = userBiodataService.getAllByUsername(principal);
+        if (optionalListUserBiodata.isEmpty()) {
+            throw new RuntimeException("User Bio Data List not fetched :");
+        }
+        List<UserBiodataDto> listUserBiodataDto = optionalListUserBiodata.get().stream().map(item -> {
+                                                String receiptId = item.getReceiptId();
+                                                PaymentTransaction paymentbyReceiptId = paymentTransactionService.getPaymentbyReceiptId(receiptId);
+                                                UserBiodataDto mapedUserBioDto = modelMapper.map(item, UserBiodataDto.class);
+                                                if (paymentbyReceiptId != null) {
+                                                    mapedUserBioDto.setPaymentStatus(paymentbyReceiptId.getStatus());
+                                                }
+                                                return mapedUserBioDto;
+                                                }).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listUserBiodataDto);
+    }
+
     @GetMapping("/generatebiodatapdf/{id}")
     public ResponseEntity<InputStreamResource> generateBiodataPdf(@PathVariable int id) {
         Optional<UserBiodata> optionUserBiodata = userBiodataService.getSingleUserDtoById(id);
@@ -97,5 +123,13 @@ public class UserBiodataController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
     }
+
+    // @PutMapping("update-biodata/{id}")
+    // public String putMethodName(@PathVariable Integer id, @RequestBody UserBiodata biodata) {
+ 
+    //     userBiodataService.updateUserBiodata(id, biodata);
+
+    //     return "Update success";
+    // }
 
 }
