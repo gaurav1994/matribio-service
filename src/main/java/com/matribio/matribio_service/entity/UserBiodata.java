@@ -30,7 +30,20 @@ public class UserBiodata {
     private String username;
     private String receiptId;
     
-    
+    public UserBiodata() {
+    }
+
+    public UserBiodata(Integer id, String profilePicture, PersonalDetails personalDetails, FamilyDetails familyDetails,
+            String userId, String username, String receiptId) {
+        this.id = id;
+        this.profilePicture = profilePicture;
+        this.personalDetails = personalDetails;
+        this.familyDetails = familyDetails;
+        this.userId = userId;
+        this.username = username;
+        this.receiptId = receiptId;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -87,5 +100,51 @@ public class UserBiodata {
         this.receiptId = receiptId;
     }
 
-    
+    // Implement Builder DSP
+
+    public static class UserBiodataBuilder {
+        private Integer id;
+        private String profilePicture;
+        private PersonalDetails personalDetails;
+        private FamilyDetails familyDetails;
+        private String userId;
+        private String username;
+        private String receiptId;
+
+        public UserBiodataBuilder id(Integer id) {
+            this.id = id;
+            return this;
+        }
+        public UserBiodataBuilder profilePicture(String profilePicture) {
+            this.profilePicture = profilePicture;
+            return this;
+        }
+        public UserBiodataBuilder personalDetails(PersonalDetails personalDetails) {
+            this.personalDetails = personalDetails;
+            return this;
+        }
+        public UserBiodataBuilder familyDetails(FamilyDetails familyDetails) {
+            this.familyDetails = familyDetails;
+            return this;
+        }
+        public UserBiodataBuilder userId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+        public UserBiodataBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+        public UserBiodataBuilder receiptId(String receiptId) {
+            this.receiptId = receiptId;
+            return this;
+        }
+
+        public UserBiodata build() {
+            return new UserBiodata(id, profilePicture, personalDetails, familyDetails, userId, username, receiptId);
+        }
+    }
+    public static UserBiodataBuilder builder() {
+        return new UserBiodataBuilder();
+    }
 }

@@ -29,22 +29,23 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<UserResponse> userLogin(@RequestBody UserRequest userRequest) {
-        User user = new User();
-        user.setUsername(userRequest.getUsername());
-        user.setPassword(userRequest.getPassword());
+        User user = User.builder().username(userRequest.getUsername())
+                        .password(userRequest.getPassword()).build();
         UserResponse userLoginObject = userService.userLogin(user);
         return ResponseEntity.ok(userLoginObject);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<SimpleMessage> userSignup(@RequestBody UserRequest userRequest) {
-        
-        User user = new User();
-        user.setUsername(userRequest.getUsername());
-        user.setPassword(userRequest.getPassword());
-        user.setEmail(userRequest.getEmail());
-        user.setRoles("ROLE_USER");
-        user.setSource("self_platform");
+
+        User user = User.builder()
+            .username(userRequest.getUsername())
+            .password(userRequest.getPassword())
+            .email(userRequest.getEmail())
+            .roles("ROLE_USER")
+            .source("self_platform")
+            .build();
+
         SimpleMessage userSignupMessage = userService.userSignup(user);
         return ResponseEntity.ok(userSignupMessage);
     }

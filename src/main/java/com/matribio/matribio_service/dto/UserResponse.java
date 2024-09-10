@@ -71,5 +71,41 @@ public class UserResponse {
         this.source = source;
     }
     
-    
+    // Implement Builder DSP.
+
+    public static class UserResponseBuilder {
+        private String userId;
+        private String username;
+        private String accessToken;
+        private List<String> roles;
+        private String authProfile;
+        private String source;
+
+        public UserResponseBuilder username(String username) {
+            this.username=username;
+            return this;
+        }
+        public UserResponseBuilder accessToken(String accessToken) {
+            this.accessToken=accessToken;
+            return this;
+        }
+        public UserResponseBuilder roles(List<String> roles) {
+            this.roles=roles;
+            return this;
+        }
+        public UserResponseBuilder authProfile(String authProfile) {
+            this.authProfile=authProfile;
+            return this;
+        }
+        public UserResponseBuilder source(String source) {
+            this.source=source;
+            return this;
+        }
+        public UserResponse build() {
+            return new UserResponse(userId, username, accessToken, roles, authProfile, source);
+        }
+    }
+    public UserResponseBuilder builder() {
+        return new UserResponseBuilder();
+    }
 }

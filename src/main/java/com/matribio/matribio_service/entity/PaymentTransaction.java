@@ -13,7 +13,6 @@ public class PaymentTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private String orderId;
     private String entity;
     private Integer amount;
@@ -22,8 +21,6 @@ public class PaymentTransaction {
     private String status;
     private Integer attempts;
     private Integer createdAt;
-
-    
 
     public PaymentTransaction() {
     }
@@ -96,5 +93,63 @@ public class PaymentTransaction {
         this.createdAt = createdAt;
     }
 
+    // Implement Builder Design Pattern.
+
+    public static class PaymentTransactionBuilder {
+        private Integer id;
+        private String orderId;
+        private String entity;
+        private Integer amount;
+        private Integer amountPaid;
+        private String receiptId;
+        private String status;
+        private Integer attempts;
+        private Integer createdAt;
+
+        public PaymentTransactionBuilder id(Integer id) {
+            this.id=id;
+            return this;
+        }
+        public PaymentTransactionBuilder orderId(String orderId) {
+            this.orderId=orderId;
+            return this;
+        }
+        public PaymentTransactionBuilder entity(String entity) {
+            this.entity=entity;
+            return this;
+        }
+        public PaymentTransactionBuilder amount(Integer amount) {
+            this.amount=amount;
+            return this;
+        }
+        public PaymentTransactionBuilder amountPaid(Integer amountPaid) {
+            this.amountPaid=amountPaid;
+            return this;
+        }
+        public PaymentTransactionBuilder receiptId(String receiptId) {
+            this.receiptId=receiptId;
+            return this;
+        }
+        public PaymentTransactionBuilder status(String status) {
+            this.status=status;
+            return this;
+        }
+        public PaymentTransactionBuilder attempts(Integer attempts) {
+            this.attempts=attempts;
+            return this;
+        }
+        public PaymentTransactionBuilder createdAt(Integer createdAt) {
+            this.createdAt=createdAt;
+            return this;
+        }
+        
+        public PaymentTransaction build() {
+            return new PaymentTransaction(id, orderId, entity, amount, amountPaid, receiptId, status, attempts, createdAt);
+        }
+    }
+
+    public static PaymentTransactionBuilder builder() {
+        return new PaymentTransactionBuilder();
+    }
     
 }

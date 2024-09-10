@@ -22,6 +22,17 @@ public class FamilyDetails {
     @OneToMany(cascade = CascadeType.ALL)
     private List<FieldAttribute> otherFamilyInformation;
 
+    public FamilyDetails() {
+    }
+
+    public FamilyDetails(Integer id, String fatherName, String motherName,
+            List<FieldAttribute> otherFamilyInformation) {
+        this.id = id;
+        this.fatherName = fatherName;
+        this.motherName = motherName;
+        this.otherFamilyInformation = otherFamilyInformation;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -54,5 +65,33 @@ public class FamilyDetails {
         this.otherFamilyInformation = otherFamilyInformation;
     }
 
-    
+    public static class FamilyDetailsBuilder {
+        private Integer id;
+        private String fatherName;
+        private String motherName;
+        private List<FieldAttribute> otherFamilyInformation;
+
+        public FamilyDetailsBuilder id(Integer id) {
+            this.id=id;
+            return this;
+        }
+        public FamilyDetailsBuilder motherName(String motherName) {
+            this.motherName=motherName;
+            return this;
+        }
+        public FamilyDetailsBuilder fatherName(String fatherName) {
+            this.fatherName=fatherName;
+            return this;
+        }
+        public FamilyDetailsBuilder otherFamilyInformation(List<FieldAttribute> otherFamilyInformation) {
+            this.otherFamilyInformation=otherFamilyInformation;
+            return this;
+        }
+        public FamilyDetails build() {
+            return new FamilyDetails(id, fatherName, motherName, otherFamilyInformation);
+        }
+    }
+    public static FamilyDetailsBuilder builder() {
+        return new FamilyDetailsBuilder();
+    }
 }

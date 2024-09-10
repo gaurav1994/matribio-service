@@ -6,7 +6,6 @@ public class ExceptionEntity {
     private String errorDetails;
     private String errorType;
 
-    
     public ExceptionEntity(String errorId, String errorMessage, String errorDetails, String errorType) {
         this.errorId = errorId;
         this.errorMessage = errorMessage;
@@ -38,5 +37,35 @@ public class ExceptionEntity {
         this.errorType = errorType;
     }
 
-    
+    // Implemnt Builder DSP
+
+    public static class ExceptionEntityBuilder {
+        private String errorId;
+        private String errorMessage;
+        private String errorDetails;
+        private String errorType;
+
+        public ExceptionEntityBuilder errorId(String errorId){
+            this.errorId = errorId;
+            return this;
+        }
+        public ExceptionEntityBuilder errorMessage(String errorMessage){
+            this.errorMessage = errorMessage;
+            return this;
+        }
+        public ExceptionEntityBuilder errorDetails(String errorDetails){
+            this.errorDetails = errorDetails;
+            return this;
+        }
+        public ExceptionEntityBuilder errorType(String errorType){
+            this.errorType = errorType;
+            return this;
+        }
+        public ExceptionEntity build() {
+            return new ExceptionEntity(errorId, errorMessage, errorDetails, errorType);
+        }
+    }
+    public static ExceptionEntityBuilder builder() {
+        return new ExceptionEntityBuilder();
+    }
 }

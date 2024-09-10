@@ -128,5 +128,55 @@ public class User implements UserDetails {
         this.source = source;
     }
     
-    
+    // Implement Builder Design Pattern.
+
+    public static class UserBuilder {
+        private String userId;
+        private String username;
+        private String password;
+        private String email;
+        private String roles;
+        private String authProfile;
+        private String source;
+
+        public UserBuilder userId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+        public UserBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+        public UserBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder roles(String roles) {
+            this.roles = roles;
+            return this;
+        }
+        public UserBuilder authProfile(String authProfile) {
+            this.authProfile = authProfile;
+            return this;
+        }
+
+        public UserBuilder source(String source) {
+            this.source = source;
+            return this;
+        }
+        
+        public User build() {
+            return new User(userId, username, password, email, roles, authProfile, source);
+        }
+    }
+
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
 }
