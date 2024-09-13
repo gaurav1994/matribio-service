@@ -85,7 +85,13 @@ public class UserBiodataController {
         if (optionUserBiodata.isEmpty()) {
             throw new RuntimeException("User Bio Data not fetched with ID :" + id);
         }
-        UserBiodataDto userBiodataDto = modelMapper.map(optionUserBiodata.get(), UserBiodataDto.class);
+        String receiptId = optionUserBiodata.get().getReceiptId();
+        PaymentTransaction paymentbyReceiptId = paymentTransactionService.getPaymentbyReceiptId(receiptId);
+        UserBiodataDto mapedUserBioDto = modelMapper.map(optionUserBiodata.get(), UserBiodataDto.class);
+        if (paymentbyReceiptId != null) {
+            mapedUserBioDto.setPaymentStatus(paymentbyReceiptId.getStatus());
+        }
+        UserBiodataDto userBiodataDto = modelMapper.map(mapedUserBioDto, UserBiodataDto.class);
         return ResponseEntity.ok().body(userBiodataDto);
     }
 
