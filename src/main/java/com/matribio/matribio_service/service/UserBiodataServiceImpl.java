@@ -13,6 +13,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -103,11 +105,12 @@ public class UserBiodataServiceImpl implements UserBiodataService{
     }
 
     @Override
-    public Optional<List<UserBiodata>> getAllByUsername(Principal principal) {
+    public Optional<List<UserBiodata>> getAllByUsername(Principal principal, int  page, int size) {
         try {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) principal;
         User loggedUser = (User) usernamePasswordAuthenticationToken.getPrincipal();
-        List<UserBiodata> listUserBiodata = userBioDetailsRepository.findAllByUsername(loggedUser.getUsername());
+        Pageable pageable = PageRequest.of(page, size);
+        List<UserBiodata> listUserBiodata = userBioDetailsRepository.findAllByUsername(loggedUser.getUsername(),  pageable);
         return Optional.of(listUserBiodata); 
         } catch (RuntimeException ex) {
             ex.printStackTrace();

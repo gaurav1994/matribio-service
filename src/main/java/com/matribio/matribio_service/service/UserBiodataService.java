@@ -13,5 +13,5 @@ public interface UserBiodataService {
     Optional<Boolean> deleteUserBiodata(int id);
     Optional<UserBiodata> getSingleUserDtoById(int id);
     Optional<UserBiodata> updateUserBiodata(int id , UserBiodata userBiodata);
-    Optional<List<UserBiodata>> getAllByUsername(Principal principal);
+    Optional<List<UserBiodata>> getAllByUsername(Principal principal, int page, int size);
 }

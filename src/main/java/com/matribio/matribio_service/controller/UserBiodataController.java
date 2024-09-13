@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.matribio.matribio_service.dto.SimpleMessage;
 import com.matribio.matribio_service.dto.UserBiodataDto;
 import com.matribio.matribio_service.entity.PaymentTransaction;
 import com.matribio.matribio_service.entity.UserBiodata;
@@ -69,12 +71,12 @@ public class UserBiodataController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> deleteUserBiodataController(@PathVariable int id){
+    public ResponseEntity<SimpleMessage> deleteUserBiodataController(@PathVariable int id){
         Optional<Boolean> optionUserBiodata = userBiodataService.deleteUserBiodata(id);
         if (optionUserBiodata.isEmpty()) {
             throw new RuntimeException("User Bio Data not saved.");
         }
-        return ResponseEntity.ok().body(optionUserBiodata.get());
+        return ResponseEntity.ok().body(new SimpleMessage("biodata deleted confimed"));
     }
 
     @GetMapping("/find/{id}")
@@ -88,8 +90,11 @@ public class UserBiodataController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<UserBiodataDto>> getUserBiodataByIdController(Principal principal ){
-        Optional<List<UserBiodata>> optionalListUserBiodata = userBiodataService.getAllByUsername(principal);
+    public ResponseEntity<List<UserBiodataDto>> getUserBiodataByIdController(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "3") int size,
+            Principal principal ){
+        Optional<List<UserBiodata>> optionalListUserBiodata = userBiodataService.getAllByUsername(principal, page, size);
         if (optionalListUserBiodata.isEmpty()) {
             throw new RuntimeException("User Bio Data List not fetched :");
         }
