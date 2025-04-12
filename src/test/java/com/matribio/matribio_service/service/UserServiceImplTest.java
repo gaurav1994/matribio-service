@@ -3,30 +3,30 @@ package com.matribio.matribio_service.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.matribio.matribio_service.dto.SimpleMessage;
+import com.matribio.matribio_service.entity.User;
+import com.matribio.matribio_service.repository.UserRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.matribio.matribio_service.dto.SimpleMessage;
-import com.matribio.matribio_service.entity.User;
-import com.matribio.matribio_service.repository.UserRepository;
+@ExtendWith(MockitoExtension.class)
+class UserServiceImplTest {
 
-@SpringBootTest
-public class UserServiceImplTest {
+    @Mock
+    private UserRepository userRepository;
 
-    @MockBean
-    UserRepository userRepository;
-
-    @MockBean
+    @Mock
     PasswordEncoder passwordEncoder;
-
-    @Autowired
-    UserService  userService;
+    
+    @InjectMocks
+    private UserServiceImpl userService;
 
     @Test
     void testLoadUserByUsernameForSuccess() {
@@ -55,16 +55,4 @@ public class UserServiceImplTest {
         SimpleMessage userSignupMessage = userService.userSignup(user);
         assertEquals(message, userSignupMessage);
     }
-
-    // @Test
-    // void testUserSignupForFailed() {
-    //     User user = User.builder().authProfile("prof").userId("11")
-    //         .email("xyz@gmail.com").username("xyz").password("xyz")
-    //         .source("source").build();
-        
-    //     Mockito.doThrow(new IllegalArgumentException()).when(userRepository).save(user);
-    //     SimpleMessage userSignupMessage = userService.userSignup(user);
-    //     assertEquals(null, userSignupMessage);
-    // }
-
 }
