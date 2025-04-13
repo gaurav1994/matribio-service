@@ -7,5 +7,13 @@ services:
       - jenkins_home:/var/jenkins_home
     restart: unless-stopped
 
+  mailhog:
+      image: mailhog/mailhog
+      container_name: 'mailhog'
+      ports:
+        - "1025:1025" # SMTP Server
+        - "8025:8025" # Web UI
+      restart: unless-stopped
+
 volumes:
   jenkins_home:
