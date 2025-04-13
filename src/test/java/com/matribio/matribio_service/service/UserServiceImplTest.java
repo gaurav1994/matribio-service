@@ -53,6 +53,6 @@ class UserServiceImplTest {
         SimpleMessage message = new SimpleMessage("User Created with UserID : " + user.getUserId());
         Mockito.when(userRepository.save(user)).thenReturn(user);
         SimpleMessage userSignupMessage = userService.userSignup(user);
-        assertEquals("message", userSignupMessage);
+        assertEquals(message, userSignupMessage);
     }
 }
