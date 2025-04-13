@@ -4,12 +4,6 @@ pipeline {
     agent any
     
     stages {
-        stage("checkout") {
-            steps {
-                git branch: 'main' , url: 'https://github.com/gaurav1994/matribio-service'
-                sh "ls"
-            }
-        }
         stage("compile") {
             steps {
                 sh "./mvnw compile"
