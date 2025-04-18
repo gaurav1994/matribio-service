@@ -2,11 +2,6 @@ echo "MatriBio Project : SCM"
 
 pipeline {
     agent any
-
-    tools {
-        docker 'latest'
-    }
-    
     stages {
         stage("compile") {
             steps {
