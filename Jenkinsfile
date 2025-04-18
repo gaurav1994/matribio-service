@@ -21,7 +21,8 @@ pipeline {
         }
         stage("run") {
             steps {
-                sh "java -jar /target/matribio-service.jar"
+                sh "ls"
+                sh "java -jar ./target/matribio-service.jar"
             }
         }
     }
