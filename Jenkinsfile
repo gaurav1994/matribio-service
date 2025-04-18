@@ -20,7 +20,7 @@ pipeline {
             }
         }
         stage('Docker Build') {
-            agent any
+            agent docker
             steps {
                 sh 'docker build -t garry/matribio-project:1.0 .'
             }
