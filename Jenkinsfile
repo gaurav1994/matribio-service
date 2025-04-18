@@ -19,12 +19,12 @@ pipeline {
             }
         }
         stage('Docker Build') {
-            agent {
-                docker {
-                    image 'openjdk'
-                    reuseNode true
-                }
-            }
+            // agent {
+            //     docker {
+            //         image 'openjdk'
+            //         reuseNode true
+            //     }
+            // }
             steps {
                 sh 'docker build -t garry/matribio-project:1.0 .'
             }
