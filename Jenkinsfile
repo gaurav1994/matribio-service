@@ -2,6 +2,10 @@ echo "MatriBio Project : SCM"
 
 pipeline {
     agent any
+
+    tools {
+        docker 'latest'
+    }
     
     stages {
         stage("compile") {
@@ -20,7 +24,6 @@ pipeline {
             }
         }
         stage('Docker Build') {
-            agent docker
             steps {
                 sh 'docker build -t garry/matribio-project:1.0 .'
             }
