@@ -17,7 +17,11 @@ pipeline {
         stage("captured") {
             steps {
                 archiveArtifacts artifacts: '**/target/*.jar'
-                junit '**/target/surefire-reports/TEST-*.xml'
+            }
+        }
+        stage("run") {
+            steps {
+                sh "java -jar /target/matribio-service.jar"
             }
         }
     }
@@ -27,6 +31,7 @@ pipeline {
                 from: 'garry@matribio.com', 
                 subject: "${currentBuild.currentResult}: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]", 
                 to: 'gkgarry911@gmail.com'
+            junit '**/target/surefire-reports/TEST-*.xml'
         }
     }
 }
