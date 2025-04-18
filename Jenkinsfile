@@ -19,6 +19,12 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/*.jar'
             }
         }
+        stage('Docker Build') {
+            agent any
+            steps {
+                sh 'docker build -t garry/matribio-project:1.0 .'
+            }
+        }
     }
     post {
         always {
