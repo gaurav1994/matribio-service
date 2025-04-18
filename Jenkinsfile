@@ -19,12 +19,6 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/*.jar'
             }
         }
-        stage("run") {
-            steps {
-                sh "ls"
-                sh "java -jar ./target/matribio-service.jar"
-            }
-        }
     }
     post {
         always {
